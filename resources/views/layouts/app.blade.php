@@ -13,6 +13,8 @@
     @include('elems.header')
 
     @yield('content')
+
+    @include('elems.footer')
 </body>
 </html>
 
