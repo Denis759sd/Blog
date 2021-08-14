@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 
 class PostController extends Controller
 {
@@ -14,6 +14,7 @@ class PostController extends Controller
 
         return view('post.show', [
             'posts' => $posts,
+            'user' => User::class,
             'color_posts' => 'text-secondary'
         ]);
     }
@@ -28,6 +29,8 @@ class PostController extends Controller
                 'title' => 'required|min:3',
                 'description' => 'required|min:2'
             ]);
+
+            $post['user_id'] = Auth::user()->getAuthIdentifier();
 
             Post::create($post);
 
