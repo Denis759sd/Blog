@@ -13,8 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
-    return view('home', ['color_home' => 'text-secondary', 'color_posts' => 'text-white']);
+    return view('home', ['color_home' => 'text-secondary']);
 });
 
-Route::get('/posts', 'App\Http\Controllers\PostController@show');
+/*
+ * PostController
+*/
+Route::get('/posts', 'App\Http\Controllers\PostController@show')->name('show-posts');
+Route::match(['get', 'post'],'/new-post', 'App\Http\Controllers\PostController@create')->name('new-post')->middleware('auth');
+
+/*
+ * HomeController
+*/
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+/*
+ * UserController
+*/
+Route::get('/profile', [App\Http\Controllers\UserController::class, 'show'])->name('profile');
